@@ -1,5 +1,5 @@
 import { UserModel } from '../models/user.model.js';
-import { createToken } from '../utils/jwt.js';
+import { createToken } from '../util/jwt.js';
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -15,9 +15,9 @@ export const login = async (req, res) => {
   const token = createToken({
     id: user.id,
     username: user.username,
-    batatas: 2,
   }); // este payload, é o que futuramente vai estar dentro do req.user
 
+  console.log(token);
   return res.json({
     token,
   });
@@ -26,6 +26,9 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
   const { username, password } = req.body;
 
+  if (!username || !password)
+    return res.status(405)
+
   const user = await UserModel.create({
     username: username,
     password,
@@ -33,3 +36,5 @@ export const register = async (req, res) => {
 
   return res.json(user);
 };
+
+

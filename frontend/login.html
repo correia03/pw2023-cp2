@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <title>login</title>
+
+  <body>
+    <div class="container ">
+      <h2>Login Form</h2>
+      <div id="loginResult"></div>
+      <div id="loginForm">
+        <div class="form-group">
+          <label for="username">username:</label>
+          <input
+            type="username"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <button type="button" onclick="login()">Login</button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h2>Signup Form</h2>
+      <div id="signupResult"></div>
+      <div id="signupForm">
+        <div class="form-group">
+          <label for="username">username:</label>
+          <input
+            type="text"
+            id="signupUsername"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="signupPassword"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <button type="button" onclick="signup()">Signup</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = () => {
+        const primaryColors = [
+          "bg-red-700",
+          "bg-orange-700",
+          "bg-yellow-700",
+          "bg-green-700",
+          "bg-blue-700",
+          "bg-purple-700",
+        ];
+        const secondaryColors = [
+          "bg-pink-700",
+          "bg-teal-700",
+          "bg-lime-700",
+          "bg-indigo-700",
+          "bg-fuchsia-700",
+          "bg-amber-700",
+        ];
+        const body = document.querySelector("body");
+        let currentColorIndex = 0;
+
+        setInterval(() => {
+          // Set the background color to the current color
+          body.className = primaryColors[currentColorIndex];
+
+          // After 2 seconds, change the background color to the next color in the primary colors array
+          setTimeout(() => {
+            currentColorIndex = (currentColorIndex + 1) % primaryColors.length;
+            body.style.transition = "background-color 5s ease";
+            body.className = primaryColors[currentColorIndex];
+          }, 5000);
+        }, 5000);
+      };
+      function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Replace with your login endpoint URL
+        const url = "http://localhost:4242/api/users/login";
+
+        const requestBody = { username, password };
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            window.location.href = "/index.html";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+      function signup() {
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+
+        // Replace with your signup endpoint URL
+        const url = 'http://localhost:4242/api/users/register';
+
+        const requestBody = { username, password };
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // Handle signup response
+            document.getElementById('signupResult').innerHTML =
+              JSON.stringify(data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
+    </script>
+  </body>
+</html>

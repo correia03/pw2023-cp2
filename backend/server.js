@@ -27,18 +27,18 @@ server.use(express.json());
 
 // http://localhost:4242/api ......
 server.use('/api', api);
+
 try {
-    database.sync({ force: false, alter: true });
-  } catch (error) {
-    console.info(error);
-  }
-  
-  // correr server no url host:port definido em .env
-  server.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
-    console.log(
-      'Server up and running at http://%s:%s',
-      process.env.SERVER_HOST,
-      process.env.SERVER_PORT
-    );
-  });
-  
+  database.sync({ force: false, alter: true });
+} catch (error) {
+  console.info(error);
+}
+
+// correr server no url host:port definido em .env
+server.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
+  console.log(
+    'Server up and running at http://%s:%s',
+    process.env.SERVER_HOST,
+    process.env.SERVER_PORT
+  );
+});

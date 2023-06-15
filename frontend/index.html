@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <title>introdução</title>
+
 <body class=" ">
   <nav class="bg-black fixed w-full">
     <div class="max-w-auto mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,12 +19,14 @@
           </a>
         </div>
         <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a
-              href="/index.html"
+          <div id="login" class="ml-10 flex items-baseline space-x-4">
+            <a href="/login.html"
+              class="text-blue-300 hover:text-blue-500 hover:opaque-50 px-3 py-2 rounded-md text-sm font-medium">login</a>
+          </div>
+          <div id="logout" class="ml-10 flex items-baseline space-x-4">
+            <a href="/index.html"
               class="text-blue-300 hover:text-blue-500 hover:opaque-50 px-3 py-2 rounded-md text-sm font-medium"
-              >inicio</a
-            >
+              onclick="logout()">logout</a>
           </div>
         </div>
         <div>
@@ -35,39 +39,41 @@
   </nav>
   <div class="flex flex-col h-screen justify-center items-center text-center ">
     <figure class="md:flex  rounded-xl p-8 md:p-0 h:bg-gray-300 ">
-      <img
-        class="w-24 h-24 md:w-48 md:h-auto md:rounded-full mx-auto  border-grey-300 "
-        src="/imagens/117781372_1082342292173000_1556267289228980318_n.jpg"
-        alt="foto"
-        width="384"
-        height="512"
-      />
+      <img class="w-auto h-auto md:w-48 md:h-48 md:rounded-full mx-auto  border-grey-300 "
+        src="/imagens/117781372_1082342292173000_1556267289228980318_n.jpg" alt="foto" width="384" height="512" />
       <div class="pt-6 md:p-8 text-center md:text-left space-y-1">
         <p class="text-lg font-medium font-bold">
           Trabalho nº2
         </p>
         <p class="text-lg font-medium font-bold">
           Nome:
-          <label id="nome-label">
-          <input type="text" id="nome" name="nome" placeholder="" required />
-          </label>
+        <div id="nomediv"></div>
+        <label id="nome-label">
+          <input type="text" id="nome" name="nome" placeholder="" value="" required />
+          <button id="editnome" onclick="editnome()">salvar</button>
+        </label>
         </p>
         <p class="text-lg font-medium font-bold">
           Idade:
-          <label id="idade-label">
-          <input type="text" id="idade" name="idade" placeholder="" required />
-          </label>
+        <div id="idadediv"></div>
+        <label id="idade-label">
+          <input type="text" id="idade" name="idade" placeholder="" value="" required />
+        </label>
         </p>
         <p class="text-lg font-medium font-bold">
           Curso:
-          <label id="curso-label">
-          <input type="text" id="curso" name="curso" placeholder="" required />
-          </label>
+        <div id="cursodiv"></div>
+        <label id="curso-label">
+          <input type="text" id="curso" name="curso" placeholder="" value="" required />
+        </label>
         </p>
+        <button id="salvar" onclick="salvar()">Salvar</button>
+        <button id="deletar" onclick="deletar()">deletar dados</button>
       </div>
     </figure>
   </div>
 </body>
+
 </html>
 <script>
   window.onload = () => {
@@ -102,6 +108,7 @@
       }, 5000);
     }, 5000);
 
+
     // Verificar se existe um token no Local Storage
     if (localStorage.getItem('token')) {
       // Token encontrado no Local Storage
@@ -111,6 +118,13 @@
       const nomeLabel = document.getElementById('nome-label');
       const idadeLabel = document.getElementById('idade-label');
       const cursoLabel = document.getElementById('curso-label');
+      const login = document.getElementById('login');
+      const salvar = document.getElementById('salvar');
+      const nomediv = document.getElementById('nomediv');
+      const idadediv = document.getElementById('idadediv');
+      const cursodiv = document.getElementById('cursodiv');
+      const deletar = document.getElementById('deletar')
+      
       if (nomeLabel) {
         nomeLabel.style.display = 'block';
       }
@@ -120,7 +134,27 @@
       if (cursoLabel) {
         cursoLabel.style.display = 'block';
       }
-    }
+      if (login) {
+        login.style.display = 'none';
+      }
+      if (salvar) {
+        salvar.style.display = 'block';
+      }
+      if (nomediv) {
+        nomediv.style.display = 'none';
+      }
+      if (idadediv) {
+        idadediv.style.display = 'none';
+      }
+      if (cursodiv) {
+        cursodiv.style.display = 'none';
+      }
+      if (deletar) {
+        deletar.style.display = 'block';
+      }
+      
+
+    } else {
       // Token não encontrado no Local Storage
       console.log('Token não encontrado');
 
@@ -128,6 +162,12 @@
       const nomeLabel = document.getElementById('nome-label');
       const idadeLabel = document.getElementById('idade-label');
       const cursoLabel = document.getElementById('curso-label');
+      const nomediv = document.getElementById('nomediv');
+      const idadediv = document.getElementById('idadediv');
+      const cursodiv = document.getElementById('cursodiv');
+      const logout = document.getElementById('logout');
+      const salvar = document.getElementById('salvar');
+      const deletar = document.getElementById('deletar')
       if (nomeLabel) {
         nomeLabel.style.display = 'none';
       }
@@ -137,5 +177,116 @@
       if (cursoLabel) {
         cursoLabel.style.display = 'none';
       }
-  };
+      if (logout) {
+        logout.style.display = 'none';
+      }
+      if (salvar) {
+        salvar.style.display = 'none';
+      }
+      if (nomediv) {
+        nomediv.style.display = 'block';
+      }
+      if (idadediv) {
+        idadediv.style.display = 'block';
+      }
+      if (cursodiv) {
+        cursodiv.style.display = 'block';
+      }
+      if (deletar) {
+        deletar.style.display = 'none';
+      }
+    }
+
+    obter();
+
+  }
+
+  const logout = () => {
+    // Remover o token do Local Storage
+    localStorage.removeItem('token');
+
+    // Redirecionar para a página de login
+    window.location.href = '/index.html';
+  }
+  function obter() {
+    //buscar os dados a api por um pedido get e adionioar nos id nome idade e curso
+    fetch("http://localhost:4242/api/curriculo/obter", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        document.getElementById("nomediv").innerHTML = data.nome;
+        document.getElementById("idadediv").innerHTML = data.idade;
+        document.getElementById("cursodiv").innerHTML = data.curso;
+        document.getElementById("nome").value = data.nome;
+        document.getElementById("idade").value = data.idade;
+        document.getElementById("curso").value = data.curso;
+      })
+  }
+  function salvar() {
+    const nome = document.getElementById('nome').value;
+    const idade = document.getElementById('idade').value;
+    const curso = document.getElementById('curso').value;
+    const dados = {
+      nome,
+      idade,
+      curso
+    }
+    console.log(dados);
+    fetch('http://localhost:4242/api/curriculo/salvar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(dados)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Dados salvos com sucesso!');
+      })
+      .catch(error => {
+        console.log(error);
+        alert('Erro ao salvar os dados!');
+      });
+  }
+  function deletar(){
+    fetch('http://localhost:4242/api/curriculo/deletar',{
+        method:'DELETE',
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem('token')}`,
+          "Content-type":"application/json"
+        }
+        }).then((res)=>{
+          console.log(res);
+          alert('Dados deletados com sucesso!');
+        }).catch((error)=>{
+          console.log(error);
+          alert('Erro ao deletar os dados!');
+
+        })
+  }
+  function editnome(){
+    const nome = document.getElementById('nome').value;
+    fetch('http://localhost:4242/api/curriculo/editarnome',{
+        method:'PUT',
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem('token')}`,
+          "Content-type":"application/json"
+        },
+        body:JSON.stringify({nome})
+        }).then((res)=>{
+          console.log(res);
+          alert('Nome editado com sucesso!');
+        }).catch((error)=>{
+          console.log(error);
+          alert('Erro ao editar o nome!');
+
+        })
+    }
 </script>
